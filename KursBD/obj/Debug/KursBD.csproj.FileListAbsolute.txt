@@ -1,0 +1,12 @@
+D:\Projects\KursBD\KursBD\bin\Debug\KursBD.exe.config
+D:\Projects\KursBD\KursBD\bin\Debug\KursBD.exe
+D:\Projects\KursBD\KursBD\bin\Debug\KursBD.pdb
+D:\Projects\KursBD\KursBD\obj\Debug\KursBD.csprojResolveAssemblyReference.cache
+D:\Projects\KursBD\KursBD\obj\Debug\KursBD.Admin.resources
+D:\Projects\KursBD\KursBD\obj\Debug\KursBD.InfoList.resources
+D:\Projects\KursBD\KursBD\obj\Debug\KursBD.LogPass.resources
+D:\Projects\KursBD\KursBD\obj\Debug\KursBD.Properties.Resources.resources
+D:\Projects\KursBD\KursBD\obj\Debug\KursBD.csproj.GenerateResource.Cache
+D:\Projects\KursBD\KursBD\obj\Debug\KursBD.csproj.CoreCompileInputs.cache
+D:\Projects\KursBD\KursBD\obj\Debug\KursBD.exe
+D:\Projects\KursBD\KursBD\obj\Debug\KursBD.pdb
