@@ -18,10 +18,11 @@ namespace KursBD
         public InfoList()
         {
             InitializeComponent();
-
+            
             speciality(comboBox2);
         }
-
+        string nameSp;
+        string name;
 
         private void InfoList_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -50,6 +51,21 @@ namespace KursBD
 
         private void abitInfo()
         {
+            //Заполняем GridView студентами
+            SqlCommand abit = MyData.con.CreateCommand();
+            abit.CommandText = "gridViewTable";
+            abit.CommandType = CommandType.StoredProcedure;
+            abit.Parameters.AddWithValue("@nSpec", name);
+
+            SqlDataAdapter adapter = new SqlDataAdapter(abit);
+
+
+            dataGridView1.DataSource = null;
+            DataTable FullDataTable = new DataTable();
+            dataGridView1.DataSource = FullDataTable;
+            adapter.Fill(FullDataTable);
+
+
 
 
 
@@ -71,8 +87,9 @@ namespace KursBD
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string nameSp = comboBox2.SelectedItem.ToString();
-            Console.WriteLine(nameSp);
+            // Выводим в комбобокс название специальности
+            nameSp = comboBox2.SelectedItem.ToString();
+            
             SqlCommand snCom = MyData.con.CreateCommand();
             snCom.CommandText = "spN";
             snCom.CommandType = CommandType.StoredProcedure;
@@ -89,9 +106,7 @@ namespace KursBD
                
             }
 
-
-
-
+            
         }
 
         private void comboBox2_SelectionChangeCommitted(object sender, EventArgs e)
@@ -111,7 +126,8 @@ namespace KursBD
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string name = comboBox3.SelectedItem.ToString();
+           //выводим кол-во бюджетных мест
+            name = comboBox3.SelectedItem.ToString();
             Console.WriteLine(name);
             SqlCommand snCom = MyData.con.CreateCommand();
             snCom.CommandText = "usNum";
@@ -124,8 +140,9 @@ namespace KursBD
                 label2.Text = rdr.GetValue(0).ToString();
             }
             rdr.Close();
-           
-            
+            abitInfo();
+
+
         }
     }
 }
