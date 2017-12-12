@@ -19,13 +19,83 @@ namespace KursBD
         {
             InitializeComponent();
 
-            string userLabel = MyData.surnameUser + " " + MyData.nameUser + " " + MyData.patronymicUser;
-            label2.Text = userLabel;
+            speciality(comboBox2);
+        }
 
-            speciality(comboBox1);
-            dataGridView1.EnableHeadersVisualStyles = false;
-            dataGridView1.RowHeadersVisible = false;
 
+        private void InfoList_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            MyData.con.Close();
+            Form check = Application.OpenForms[0];
+            check.Close();
+        }
+
+        private void speciality(ComboBox sender)
+        {
+
+            SqlCommand fnCom = MyData.con.CreateCommand();
+            fnCom.CommandText = "fcNames";
+            fnCom.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter fAdapter = new SqlDataAdapter(fnCom);
+            DataTable fnTable = new DataTable();
+            fAdapter.Fill(fnTable);
+
+            foreach (DataRow row in fnTable.Rows)
+            {
+                comboBox2.Items.Add((string)row.ItemArray[0]);
+                comboBox2.SelectedIndex = 0;
+            }
+
+        }
+
+        private void abitInfo()
+        {
+
+
+
+        }
+
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            //    Console.WriteLine("COMBO");
+            //    Console.WriteLine(comboBox1.SelectedItem);
+
+            //    abitInfo();
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string nameSp = comboBox2.SelectedItem.ToString();
+            Console.WriteLine(nameSp);
+            SqlCommand snCom = MyData.con.CreateCommand();
+            snCom.CommandText = "spN";
+            snCom.CommandType = CommandType.StoredProcedure;
+            snCom.Parameters.AddWithValue("@facName", nameSp);
+            SqlDataAdapter sAdapter = new SqlDataAdapter(snCom);
+            DataTable snTable = new DataTable();
+            sAdapter.Fill(snTable);
+            comboBox3.Items.Clear();
+            
+            foreach (DataRow row in snTable.Rows)
+            {
+                comboBox3.Items.Add((string)row.ItemArray[0]);
+                comboBox3.SelectedIndex = 0;
+               
+            }
+
+
+
+
+        }
+
+        private void comboBox2_SelectionChangeCommitted(object sender, EventArgs e)
+        {
 
         }
 
@@ -34,87 +104,29 @@ namespace KursBD
 
         }
 
-        private void InfoList_FormClosed(object sender, FormClosedEventArgs e)
+        private void InfoList_Load_1(object sender, EventArgs e)
         {
-           MyData.con.Close();
-           Form check = Application.OpenForms[0];
-           check.Close();
+
         }
 
-        private void speciality (ComboBox sender)
+        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
-            sender.Items.Add("Приоритет 1");
-            sender.Items.Add("Приоритет 2");
-            sender.Items.Add("Приоритет 3");
-            sender.SelectedIndex = 0;
-        }
-
-        private void abitInfo()
-        {
-            int priorityNumber = 1;
-
-            switch (comboBox1.Text)
+            string name = comboBox3.SelectedItem.ToString();
+            Console.WriteLine(name);
+            SqlCommand snCom = MyData.con.CreateCommand();
+            snCom.CommandText = "usNum";
+            snCom.CommandType = CommandType.StoredProcedure;
+            snCom.Parameters.AddWithValue("@spName", name);
+            SqlDataReader rdr = snCom.ExecuteReader();
+            label2.Text = null;
+            while(rdr.Read())
             {
-                case "Приоритет 1":
-                    priorityNumber = 1;
-                    break;
-                case "Приоритет 2":
-                    priorityNumber = 2;
-                    break;
-                case "Приоритет 3":
-                    priorityNumber = 3;
-                    break;
+                label2.Text = rdr.GetValue(0).ToString();
             }
+            rdr.Close();
+           
             
-
-            
-            //Вытаскиваем название специальности
-            SqlCommand spName = MyData.con.CreateCommand();
-            spName.CommandText = "Select * from specNames(@prNum)";
-            spName.Parameters.AddWithValue("@prNum", priorityNumber);
-            SqlDataReader reader4 = spName.ExecuteReader();
-            reader4.Read();
-            string specName = reader4.GetString(0);
-
-
-
-
-            //Заполняем студентами в зависимости от приоритета
-            SqlCommand com3 = MyData.con.CreateCommand();
-            com3.CommandText = "SELECT  DISTINCT lastName, firstName,patronName " +
-                                "from dbo.enrolee,dbo.speciality " +
-                                "where (@prNum=1 and specName= @prName and spec1_id=spec_id) " +
-                                 "or (@prNum=2 and specName= @prName and spec2_id=spec_id) " +
-                                 "or (@prNum=3 and specName= @prName and spec3_id=spec_id) " +
-                                "group by  lastName, firstName,patronName";
-            com3.Parameters.AddWithValue("@prNum", priorityNumber);
-            com3.Parameters.AddWithValue("@prName", specName);
-            SqlDataReader reader3 = com3.ExecuteReader();
-            reader3.Read();
-
-            DataTable FullDataTable = new DataTable();
-            FullDataTable.Load(reader3);
-
-
-            dataGridView1.DataSource = null;
-            dataGridView1.DataSource = FullDataTable;
-            // dataGridView1.Columns["Предмет"].Frozen = true;
-            for (int i = 1; i <= dataGridView1.Columns.Count - 1; i++)
-            {
-                dataGridView1.Columns[i].Width = 52;
-                dataGridView1.Columns[i].HeaderCell.Style.Font = new Font("Microsoft Sans Serif", 7);
-            }
-
-        }
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            abitInfo();
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
     }
 }
+
