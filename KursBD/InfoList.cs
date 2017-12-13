@@ -63,7 +63,7 @@ namespace KursBD
             dataGridView1.DataSource = null;
             DataTable FullDataTable = new DataTable();
             dataGridView1.DataSource = FullDataTable;
-            adapter.Fill(FullDataTable);
+            //adapter.Fill(FullDataTable);
 
 
 
