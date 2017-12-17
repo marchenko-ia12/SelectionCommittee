@@ -47,12 +47,13 @@ namespace KursBD
                 textBox2.Text = "";
 
             }
-            else if(nameRole == "Комиссия" || nameRole == "Администратор")
+            else if(nameRole == "3")
             {
                 Admin inf = new Admin();
                 this.Hide();
                 inf.Show();
             }
+            
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

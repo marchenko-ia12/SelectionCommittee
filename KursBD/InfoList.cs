@@ -19,7 +19,7 @@ namespace KursBD
         {
             InitializeComponent();
             
-            speciality(comboBox2);
+            Facult(comboBox2);
         }
         string nameSp;
         string name;
@@ -31,9 +31,9 @@ namespace KursBD
             check.Close();
         }
 
-        private void speciality(ComboBox sender)
+        private void Facult(ComboBox sender)
         {
-
+            // Выводим в комбобокс название факультета
             SqlCommand fnCom = MyData.con.CreateCommand();
             fnCom.CommandText = "fcNames";
             fnCom.CommandType = CommandType.StoredProcedure;
@@ -63,12 +63,7 @@ namespace KursBD
             dataGridView1.DataSource = null;
             DataTable FullDataTable = new DataTable();
             dataGridView1.DataSource = FullDataTable;
-            //adapter.Fill(FullDataTable);
-
-
-
-
-
+            adapter.Fill(FullDataTable);
         }
 
 
@@ -79,10 +74,7 @@ namespace KursBD
 
         private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            //    Console.WriteLine("COMBO");
-            //    Console.WriteLine(comboBox1.SelectedItem);
 
-            //    abitInfo();
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)

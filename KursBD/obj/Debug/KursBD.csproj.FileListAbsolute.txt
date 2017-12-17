@@ -33,3 +33,4 @@ D:\Projects\SelectionCommittee-master\KursBD\obj\Debug\KursBD.csproj.GenerateRes
 D:\Projects\SelectionCommittee-master\KursBD\obj\Debug\KursBD.csproj.CoreCompileInputs.cache
 D:\Projects\SelectionCommittee-master\KursBD\obj\Debug\KursBD.exe
 D:\Projects\SelectionCommittee-master\KursBD\obj\Debug\KursBD.pdb
+D:\Projects\SelectionCommittee-master\KursBD\obj\Debug\KursBD.AddStudent.resources
